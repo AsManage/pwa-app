@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.error-message {
+  font-size: 14px;
+  color: rgb(148, 7, 7);
+}
+.TreeNode{
+  display: flex
+}
+
+.TreeNode .displayName{
+  font-size: 18px;
+}
+
+.TreeNodeToolBar{
+  display: none;
+}
+.typeIconContainer svg{
+  width: 25px;
+  height: 25px;
+}
+
+.caretContainer svg {
+  width: 25px;
+  height: 25px;
+}
+
+.required::after {
+  content: "*";
+  font-size: 20px;
+  line-height: 20px;
+  color: red;
+}

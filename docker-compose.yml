@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  nginx:
+    image: pwa-app
+    restart: always
+    build: .
+    ports:
+      - '8081:80'
