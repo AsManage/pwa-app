@@ -42,12 +42,12 @@ export function MainLayout({ children }: Props) {
           </Text>
         </Flex>
       </Flex>
-      <Box bg="gray.100" h="calc(100vh - 100px)" p="12px" overflow="auto">
+      <Box bg="gray.100" h="calc(100vh - 110px)" p="12px" overflow="auto">
         {children}
       </Box>
       <Box h="50px">
         <Tabs position="relative" isFitted colorScheme="purple">
-          <TabList h="50px">
+          <TabList h="60px" pb="10px">
             <Tab borderTopWidth="3px" borderBottom="none">
               <IoHome fontSize="18px" />
             </Tab>
