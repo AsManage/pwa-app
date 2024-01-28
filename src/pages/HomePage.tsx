@@ -1,3 +1,6 @@
+import { Box } from "@chakra-ui/react";
+import { FeatureCard } from "components/card/FeatureCard";
+import { HomContainer } from "containers/HomContainer";
 import { MainLayout } from "layouts/MainLayout";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,7 +14,7 @@ export function HomePage({}: Props) {
 
   return (
     <MainLayout>
-      <p>HOME</p>
+      <HomContainer />
     </MainLayout>
   );
 }

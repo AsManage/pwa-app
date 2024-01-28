@@ -69,7 +69,7 @@ export const LoginContainers = () => {
         loginAction({
           params: info,
           callback: () => {
-            navigate("/");
+            navigate("/home");
           },
         })
       );

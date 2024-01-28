@@ -1,6 +1,4 @@
 import {
-  Avatar,
-  AvatarBadge,
   Badge,
   Box,
   BoxProps,
@@ -10,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AUDIT_STATUS } from "constants/common";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { showData } from "utils/common";
 import { LocalStorage } from "utils/localStorage";
@@ -61,7 +59,7 @@ export default function AuditCard({
   }, [status]);
   return (
     <Box
-      w="100%"
+      w="300px"
       borderRadius="12px"
       overflow="hidden"
       cursor="pointer"

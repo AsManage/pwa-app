@@ -62,7 +62,7 @@ centralGW.interceptors.response.use(
       })
     );
     if (response?.status === 401) {
-      window.location.href = "/auth";
+      window.location.href = "/";
     }
 
     throw error;

@@ -24,7 +24,7 @@ const authSlice = createSlice({
     logout: () => {
       storage.clearStorageItem(storage.availableKey.ACCESS_TOKEN);
       storage.clearStorageItem(storage.availableKey.ACCOUNT_INFO);
-      window.location.href = "/auth";
+      window.location.href = "/";
     },
     setEmailCached: (state, action) => {
       state.emailCached = action.payload;

@@ -1,10 +1,8 @@
 import { Box, Flex, Image, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
-import SimpleSidebar from "components/molecules/Sidebar";
-import React from "react";
-import { FaBackward, FaList } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { IoHome, IoPersonSharp, IoSettings } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { IoHome, IoPersonSharp } from "react-icons/io5";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 type Props = {
   children: React.ReactNode;
@@ -12,6 +10,23 @@ type Props = {
 
 export function MainLayout({ children }: Props) {
   const navigate = useNavigate();
+  const [index, setIndex] = useState(0);
+  const router = useLocation();
+
+  useEffect(() => {
+    const firstRoute = router.pathname.split("/")[1];
+    switch (firstRoute) {
+      case "home":
+        setIndex(0);
+        break;
+      case "profile":
+        setIndex(1);
+        break;
+      default:
+        break;
+    }
+  }, [router.pathname]);
+
   return (
     <Box>
       <Flex
@@ -46,15 +61,24 @@ export function MainLayout({ children }: Props) {
         {children}
       </Box>
       <Box h="50px">
-        <Tabs position="relative" isFitted colorScheme="purple">
+        <Tabs position="relative" isFitted colorScheme="purple" index={index}>
           <TabList h="60px" pb="10px">
-            <Tab borderTopWidth="3px" borderBottom="none">
+            <Tab
+              borderTopWidth="3px"
+              borderBottom="none"
+              onClick={() => {
+                navigate("/home");
+              }}
+            >
               <IoHome fontSize="18px" />
             </Tab>
-            <Tab borderTopWidth="3px" borderBottom="none">
-              <IoSettings fontSize="18px" />
-            </Tab>
-            <Tab borderTopWidth="3px" borderBottom="none">
+            <Tab
+              borderTopWidth="3px"
+              borderBottom="none"
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
               <IoPersonSharp fontSize="18px" />
             </Tab>
           </TabList>
