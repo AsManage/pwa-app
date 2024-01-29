@@ -118,28 +118,6 @@ export default function AuditCard({
           w="100%"
         >
           <Badge ml="1" colorScheme="gray">
-            ASSIGNEE
-          </Badge>
-          <Link
-            color={userInfo?.id == assigneeId ? "gray.400" : "purple.400"}
-            fontWeight="bold"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (userInfo?.id != assigneeId) {
-                navigate(`/user/${assigneeId}`);
-              }
-            }}
-          >
-            {userInfo?.id == assigneeId ? "YOU" : showData(assignee)}
-          </Link>
-        </Flex>
-        <Flex
-          gap="12px"
-          justifyContent="space-between"
-          alignItems="center"
-          w="100%"
-        >
-          <Badge ml="1" colorScheme="gray">
             created by
           </Badge>
           <Link
@@ -147,9 +125,6 @@ export default function AuditCard({
             fontWeight="bold"
             onClick={(e) => {
               e.stopPropagation();
-              if (userInfo?.id != assignerId) {
-                navigate(`/user/${assignerId}`);
-              }
             }}
           >
             {userInfo?.id == assignerId ? "YOU" : showData(assigner)}

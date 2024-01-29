@@ -8,6 +8,7 @@ import { HomePage } from "pages/HomePage";
 import { ProfilePage } from "pages/ProfilePage";
 import AuditPage from "pages/audit/AuditPage";
 import AuditDetailPage from "pages/audit/AudiDetailPage";
+import AuditQRVerifyPage from "pages/audit/AuditQRVerifyPage";
 
 type Props = {};
 
@@ -24,6 +25,7 @@ function MainRoutes({}: Props) {
       {/** AUDIT ROUTE */}
       <Route path="/audit" element={<AuditPage />} />
       <Route path="/audit/:auditId" element={<AuditDetailPage />} />
+      <Route path="/audit/:auditId/verify" element={<AuditQRVerifyPage />} />
 
       <Route path="/error/404" element={<NotFoundPage />} />
       <Route path="*" element={<NotFoundPage />} />
