@@ -8,12 +8,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AssetCard } from "components/molecules/AssetCard";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import QrReader from "react-qr-reader";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getListAvailableSession,
   getSessionDetail,
+  updateAssetAuditDetail,
 } from "services/audit.service";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
@@ -23,7 +24,12 @@ type Props = {};
 
 export default function AuditQRVeirifyContainer({}: Props) {
   const [isVerified, setIsVerified] = useState(false);
+  const auditAssetId = useRef("");
   const [sessionDetail, setSessionDetail] = useState({});
+  const [formData, setFormData] = useState({
+    note: "",
+    status: "WAITING_FOR_AUDIT",
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { auditId } = useParams();
@@ -36,6 +42,7 @@ export default function AuditQRVeirifyContainer({}: Props) {
       _.mapKeys((sessionDetail as any)?.assets, "assetId")
     ).includes(data);
     if (valid) {
+      auditAssetId.current = data;
       dispatch(
         showToast({
           status: "success",
@@ -54,6 +61,15 @@ export default function AuditQRVeirifyContainer({}: Props) {
     }
   };
 
+  const handleSubmitAudit = async () => {
+    await updateAssetAuditDetail(
+      Number(auditId),
+      Number(auditAssetId.current),
+      formData
+    );
+    navigate(-1);
+  };
+
   useEffect(() => {
     initData();
   }, []);
@@ -63,44 +79,22 @@ export default function AuditQRVeirifyContainer({}: Props) {
       {isVerified ? (
         <VStack spacing="12px" w="100%">
           <Box w="100%">
-            <Text className="required" mb="8px">
-              Status
-            </Text>
-            <Select
-              focusBorderColor="purple.400"
-              colorScheme="purple"
-              placeholder="Select option"
-              variant="solid"
-              //   value={formData.categoryId}
-              //   onChange={(e) => {
-              //     handleChangeData("categoryId", e.target.value);
-              //   }}
-            >
-              <option value="bad">Bad</option>
-              <option value="medium">Medium</option>
-              <option value="good">Good</option>
-              <option value="very-good">Very Good</option>
-            </Select>
-          </Box>
-          <Box w="100%">
             <Text mb="8px">Note</Text>
             <Textarea
               placeholder=""
               focusBorderColor="purple.400"
               colorScheme="purple"
               variant="solid"
-              //   value={formData.conditionState}
-              //   onChange={(e) => {
-              //     handleChangeData("conditionState", e.target.value);
-              //   }}
+              value={formData.note}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  note: e.target.value,
+                });
+              }}
             />
           </Box>
-          <Button
-            colorScheme="purple"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
+          <Button colorScheme="purple" onClick={handleSubmitAudit}>
             Submit
           </Button>
         </VStack>

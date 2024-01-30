@@ -31,19 +31,19 @@ export default function AlertConfirm({
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Confirm!
+            Action Confirm!
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            Are you sure to delete? You can't undo this action afterwards.
+            Are you sure? You can't undo this action afterwards.
           </AlertDialogBody>
 
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="red" onClick={onSubmit} ml={3}>
-              Delete
+            <Button colorScheme="purple" onClick={onSubmit} ml={3}>
+              Confirm
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

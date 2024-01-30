@@ -1,15 +1,21 @@
-import { Box, Button, VStack } from "@chakra-ui/react";
+import { Box, Button, VStack, useDisclosure } from "@chakra-ui/react";
+import AlertConfirm from "components/modal/AlertConfirm";
 import { AssetCard } from "components/molecules/AssetCard";
 import { AUDIT_STATUS } from "constants/common";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getSessionDetail } from "services/audit.service";
+import {
+  endAuditSession,
+  getSessionDetail,
+  startAuditSession,
+} from "services/audit.service";
 
 type Props = {};
 
 export default function AuditDetailContainer({}: Props) {
   const [sessionDetail, setSessionDetail] = useState({});
   const { auditId } = useParams();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
   const initData = async () => {
@@ -20,6 +26,16 @@ export default function AuditDetailContainer({}: Props) {
     }
   };
 
+  const handleStartAudit = async () => {
+    await startAuditSession(Number(auditId));
+    initData();
+  };
+
+  const handleEndAudit = async () => {
+    await endAuditSession(Number(auditId));
+    navigate(-1);
+  };
+
   useEffect(() => {
     initData();
   }, []);
@@ -27,24 +43,36 @@ export default function AuditDetailContainer({}: Props) {
   return (
     <Box>
       <VStack spacing="12px">
-        {true ? (
-          (sessionDetail as any)?.assets?.map((asset: any) => {
-            return (
-              <AssetCard
-                key={asset?.assetId}
-                title={asset?.detail?.name}
-                image={asset?.detail?.image}
-                status={asset?.status}
-                onClick={() => {
-                  navigate("verify");
-                }}
-              />
-            );
-          })
+        {(sessionDetail as any)?.status === AUDIT_STATUS.AUDITING ? (
+          <VStack w="100%">
+            {(sessionDetail as any)?.assets?.map((asset: any) => {
+              return (
+                <AssetCard
+                  key={asset?.assetId}
+                  title={asset?.detail?.name}
+                  image={asset?.detail?.image}
+                  status={asset?.status}
+                  onClick={() => {
+                    navigate("verify");
+                  }}
+                />
+              );
+            })}
+            <Button colorScheme="red" onClick={onOpen}>
+              End Audit
+            </Button>
+          </VStack>
         ) : (
-          <Button colorScheme="green">Start Audit</Button>
+          <Button colorScheme="green" onClick={handleStartAudit}>
+            Start Audit
+          </Button>
         )}
       </VStack>
+      <AlertConfirm
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleEndAudit}
+      />
     </Box>
   );
 }
